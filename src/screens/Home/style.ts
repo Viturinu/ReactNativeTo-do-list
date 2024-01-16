@@ -10,16 +10,27 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         marginTop: 43
     },
+    form: {
+        flexDirection: "row",
+        marginTop: 35,
+        width: "100%",
+        paddingLeft:22,
+        paddingRight:22
+    },
     input: {
         height: 52,
         borderRadius: 6,
         color: "#808080",
         backgroundColor: "#262626",
-        borderColor: "#FFF",
         fontSize: 16,
         marginRight: 4,
         paddingLeft: 8,
         flex: 1
+    },
+    inputFocused:{
+        borderWidth: 1,
+        borderColor: "#5E60CE",
+        color: "#F2F2F2"
     },
     buttonText:{
         borderRadius: 6,
@@ -29,11 +40,59 @@ export const styles = StyleSheet.create({
         backgroundColor: "#1E6F9F",
         justifyContent: "center"
     },
-    form: {
+    toDoListContainer:{
+        flex:1,
+        marginTop: 22
+    },
+    toDoListStatus:{
         flexDirection: "row",
-        marginTop: 35,
-        width: "100%",
+        justifyContent: "space-between",
+        height: 19,
         paddingLeft:22,
-        paddingRight:22
-    }
+        paddingRight:22,
+        marginBottom: 20        
+    },
+    activiesCreatedContainer:{
+        flexDirection: "row",
+        height: 19,
+        width: 87
+    },
+    activiesCreatedText:{
+        color: "#4EA8DE",
+        marginRight: 8
+    },
+    activiesCreatedNumber:{
+        textAlign: "center",
+        width: 25,
+        height: 19,
+        borderRadius: 999,
+        backgroundColor:"#333333",
+        color: "#D9D9D9"
+    },
+    activiesDoneContainer:{
+        flexDirection: "row",
+        height: 19,
+        width: 87
+    },
+    activiesDoneText:{
+        color: "#8284FA",
+        marginRight: 8
+    },
+    activiesDoneNumber:{
+        textAlign: "center",
+        width: 25,
+        height: 19,
+        borderRadius: 999,
+        backgroundColor:"#333333",
+        color: "#D9D9D9"
+    },
+    toDoListTrue:{
+        flex: 1,
+        alignItems:"center",
+        justifyContent: "center",
+        borderWidth: 1,
+        borderTopColor: "#262626",
+        paddingLeft: 14,
+        paddingRight: 14
+    },
 })
