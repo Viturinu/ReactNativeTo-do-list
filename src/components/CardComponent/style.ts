@@ -19,18 +19,22 @@ export const styles = StyleSheet.create({
     },
     cardContainerText: {
         color: "#F2F2F2",
-        textAlign:"left",
+        textAlign: "left",
+    },
+    cardContainerTextTrue: {
+        color: "#808080",
+        textDecorationLine: "line-through"
     },
     LogoView: {
         width: "10%",
         textAlign: "center",
-        alignItems:"center",
+        alignItems: "center",
         justifyContent: "center"
     },
-    checkBox:{
+    checkBox: {
         width: "10%",
         textAlign: "center",
-        alignItems:"center",
+        alignItems: "center",
         justifyContent: "center",
     }
 })
