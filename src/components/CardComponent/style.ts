@@ -3,27 +3,34 @@ import { StyleSheet } from "react-native"
 export const styles = StyleSheet.create({
     cardContainer: {
         flexDirection: "row",
-        height: 64,
-        maxWidth: 327,
-        marginBottom: 4,
+        height: 58,
+        width: "100%",
+        marginTop: 6,
         borderWidth: 1,
         borderColor: "#333333",
         backgroundColor: "#262626",
         borderRadius: 6,
-        justifyContent: "space-between",
-        alignItems: "center",
+        justifyContent: "space-between"
     },
-    cartContainerView: {
-        borderWidth: 2,
-        borderColor: "black"
+    cardContainerViewText: {
+        justifyContent: "center",
+        minWidth: "75%",
+        maxWidth: "75%",
     },
-    cartContainerText: {
-        textAlign: "left",
+    cardContainerText: {
         color: "#F2F2F2",
-        borderWidth: 2,
-        borderColor: "white",
+        textAlign:"left",
     },
     LogoView: {
-
+        width: "10%",
+        textAlign: "center",
+        alignItems:"center",
+        justifyContent: "center"
+    },
+    checkBox:{
+        width: "10%",
+        textAlign: "center",
+        alignItems:"center",
+        justifyContent: "center",
     }
 })

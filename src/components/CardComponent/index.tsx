@@ -5,20 +5,23 @@ import Trash from "../../assets/Trash.svg"
 import React from "react";
 
 interface taskProps {
-    task: string;
+    taskId:number;
+    task:string;
+    done:boolean
 }
 
 export function CardComponent({ task }: taskProps) {
 
     return (
         <View style={styles.cardContainer}>
-            <Checkbox />
-            <View style={styles.cartContainerView}>
-                <Text style={styles.cartContainerText}> {task} </Text>
+            <View style={styles.checkBox}>
+                    <Checkbox />
             </View>
-
+            <View style={styles.cardContainerViewText}>
+                <Text style={styles.cardContainerText}> {task} </Text>
+            </View>
             <View style={styles.LogoView}>
-                <Trash width={12} height={14} />
+                    <Trash width={12} height={14} />
             </View>
         </View>
     )

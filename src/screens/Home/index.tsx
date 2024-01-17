@@ -1,16 +1,25 @@
 import { View, Text, TextInput, TouchableOpacity, FlatList } from "react-native";
 import { styles } from "./style";
-import Logo from "../../assets/todoLogo.svg";
-import IconAdd from "../../assets/addIcon.svg";
 import { useState } from "react";
 import { CardComponent } from "../../components/CardComponent";
 import { EmptyListComponent } from "../../components/EmptyListComponent";
 
+interface taskObject{
+    taskId:number;
+    task:string;
+    done:boolean;
+}
+
 export function Home() {
 
-    const temporaryList = [" TestadestandoTestando", " TestandoTesdsadsadtandoTestandoTestando", " TestandoTestandoTestandoTestando"];
+    function handleRemove(taskId:number){
+            
+        }
+    }
 
-    const [tasksList, setTaskList] = useState<string[]>([]);
+    const temporaryList = ["dsaidasidsa", "doTestandoTestandoTestandoTesdsadsadtando", "TestandoTestandoTestandoTestando"];
+
+    const [tasksList, setTasksList] = useState<taskObject[]>([]);
     const [task, setTask] = useState<string>("");
 
     const [isFocused, setIsFocused] = useState(false);
@@ -26,6 +35,8 @@ export function Home() {
                     style={[styles.input, isFocused && styles.inputFocused]}
                     onFocus={() => setIsFocused(true)}
                     onBlur={() => setIsFocused(false)}
+                    onChangeText={setTask}
+                    value={task}
                     placeholder="Adicione uma nova tarefa"
                     placeholderTextColor="#808080"
                 />

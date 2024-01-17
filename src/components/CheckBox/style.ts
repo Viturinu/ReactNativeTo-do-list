@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native"
 
 export const styles = StyleSheet.create({
     checkboxBase: {
-        width: 22,
-        height: 22,
+        width: 18,
+        height: 18,
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 14,
