@@ -98,7 +98,6 @@ export function Home() {
                                 onClickCheckBox={() => {
                                     item.onClickCheckBox();
                                     setDoneCount((tasksList.filter((item) => item.done !== false)).length);
-                                    console.log(doneCount);
                                 }}
                                 onHandleRemoveTask={() => handleRemoveTask(item.taskId)}
                                 key={item.taskId}
