@@ -4,17 +4,16 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 import { styles } from "../CheckBox/style"
 
 interface props {
-    onClickCheckBox: (item: boolean) => void;
-    checked: boolean;
+    onClickCheckBox: () => void;
+    done: boolean;
 }
 
-export function Checkbox({ checked, onClickCheckBox }: props) {
-    //const [checked, setChecked] = useState(false);
+export function Checkbox({ done, onClickCheckBox }: props) {
     return (
         <Pressable
-            style={[styles.checkboxBase, checked && styles.checkboxChecked]}
-            onPress={() => onClickCheckBox(!checked)}>
-            {checked && <Feather name="check" size={12} color="white" />}
+            style={[styles.checkboxBase, done && styles.checkboxChecked]}
+            onPress={() => onClickCheckBox()}>
+            {done && <Feather name="check" size={12} color="white" />}
         </Pressable>
     );
 }

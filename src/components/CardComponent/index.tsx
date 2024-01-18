@@ -4,23 +4,23 @@ import { Checkbox } from "../CheckBox"
 import Trash from "../../assets/Trash.svg"
 import React from "react";
 
-interface taskProps {
+export interface taskObjectProps {
     taskId: string;
-    task: string;
+    taskDescription: string;
     done: boolean;
     onClickCheckBox: () => void;
     onHandleRemoveTask: (taskId: string) => void;
 }
 
-export function CardComponent({ task, taskId, done, onClickCheckBox, onHandleRemoveTask }: taskProps) {
+export function CardComponent({ taskDescription, taskId, done, onClickCheckBox, onHandleRemoveTask }: taskObjectProps) {
 
     return (
         <View style={styles.cardContainer}>
             <View style={styles.checkBox}>
-                <Checkbox onClickCheckBox={onClickCheckBox} checked={done} />
+                <Checkbox onClickCheckBox={() => onClickCheckBox()} done={done} />
             </View>
             <View style={styles.cardContainerViewText}>
-                <Text style={[styles.cardContainerText, done && styles.cardContainerTextTrue]}> {task} </Text>
+                <Text style={[styles.cardContainerText, done && styles.cardContainerTextTrue]}> {taskDescription} </Text>
             </View>
             <View style={styles.LogoView}>
                 <TouchableOpacity onPress={() => onHandleRemoveTask(taskId)}>

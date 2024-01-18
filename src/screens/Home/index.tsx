@@ -1,31 +1,41 @@
 import { View, Text, TextInput, TouchableOpacity, FlatList, Alert } from "react-native";
 import { styles } from "./style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardComponent } from "../../components/CardComponent";
 import { EmptyListComponent } from "../../components/EmptyListComponent";
 import Logo from "../../assets/todoLogo.svg";
 import IconAdd from "../../assets/addIcon.svg"
 
-
-interface taskObjectScheme {
+interface taskObjectProps {
     taskId: string;
     taskDescription: string;
     done: boolean;
     onClickCheckBox: () => void;
-    handleRemoveTask: (taskId: string) => void;
+}
+
+class taskObject implements taskObjectProps {
+    taskId: string;
+    taskDescription: string;
+    done: boolean;
+    constructor(taskDescription: string) {
+        this.taskId = Math.random().toString(36).substring(2) + Date.now().toString(36);
+        this.taskDescription = taskDescription;
+        this.done = false;
+    }
+
+    onClickCheckBox(): void {
+        this.done === true ? this.done = false : this.done = true;
+        console.log("done da task " + this.taskDescription + "é igual:" + this.done)
+    }
 }
 
 export function Home() {
 
-    const [tasksList, setTasksList] = useState<taskObjectScheme[]>([]);
+    const [doneCount, setDoneCount] = useState(0);
+    const [tasksList, setTasksList] = useState<taskObject[]>([]);
     const [task, setTask] = useState<string>("");
 
     const [isFocused, setIsFocused] = useState(false);
-
-
-    function handleCheckBox() {
-
-    }
 
     function handleAddTask(task: string) {
         if (task === "") {
@@ -33,24 +43,16 @@ export function Home() {
             return;
         }
         const randomId = Math.random().toString(36).substring(2) + Date.now().toString(36);
-        const taskObject: taskObjectScheme = {
-            taskId: Math.random().toString(36).substring(2) + Date.now().toString(36),
-            taskDescription: task,
-            done: false,
-            onClickCheckBox() {
-                this.done ? this.done = false : this.done = true;
-            },
-            handleRemoveTask(taskId: string) {
-                const newTasksArray = tasksList.filter((item) => item.taskId !== taskId);
-                setTasksList(newTasksArray);
-            }
-        };
-        setTasksList((prevState) => [...prevState, taskObject]);
+        setTasksList((prevState) => [...prevState, new taskObject(task)]);
 
         setTask("");
     }
 
-    //const temporaryList = ["dsaidasidsa", "doTestandoTestandoTestandoTesdsadsadtando", "TestandoTestandoTestandoTestando"];
+    function handleRemoveTask(taskId: string) {
+        (tasksList.find(item => item.taskId === taskId))?.done ? setDoneCount(doneCount - 1) : null;
+        const newTasksArray = tasksList.filter((item) => item.taskId !== taskId);
+        setTasksList(newTasksArray);
+    }
 
     return (
         <View style={styles.container}>
@@ -77,11 +79,11 @@ export function Home() {
                 <View style={styles.toDoListStatus}>
                     <View style={styles.activiesCreatedContainer}>
                         <Text style={styles.activiesCreatedText}>Criadas</Text>
-                        <Text style={styles.activiesCreatedNumber}>2</Text>
+                        <Text style={styles.activiesCreatedNumber}>{tasksList.length}</Text>
                     </View>
                     <View style={styles.activiesDoneContainer}>
                         <Text style={styles.activiesDoneText}>Concluidas</Text>
-                        <Text style={styles.activiesDoneNumber}>5</Text>
+                        <Text style={styles.activiesDoneNumber}>{doneCount}</Text>
                     </View>
                 </View>
 
@@ -92,10 +94,14 @@ export function Home() {
                         renderItem={({ item }) => (
                             <CardComponent
                                 taskId={item.taskId}
-                                task={item.taskDescription}
+                                taskDescription={item.taskDescription}
                                 done={item.done}
-                                onClickCheckBox={item.onClickCheckBox}
-                                onHandleRemoveTask={() => item.handleRemoveTask(item.taskId)}
+                                onClickCheckBox={() => {
+                                    item.onClickCheckBox();
+                                    setDoneCount((tasksList.filter((item) => !item.done)).length);
+                                    console.log(doneCount);
+                                }}
+                                onHandleRemoveTask={() => handleRemoveTask(item.taskId)}
                                 key={item.taskId}
                             />
                         )}
