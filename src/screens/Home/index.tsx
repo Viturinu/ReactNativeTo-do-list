@@ -1,6 +1,6 @@
 import { View, Text, TextInput, TouchableOpacity, FlatList, Alert } from "react-native";
 import { styles } from "./style";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { CardComponent } from "../../components/CardComponent";
 import { EmptyListComponent } from "../../components/EmptyListComponent";
 import Logo from "../../assets/todoLogo.svg";
@@ -25,15 +25,15 @@ class taskObject implements taskObjectProps {
 
     onClickCheckBox(): void {
         this.done === true ? this.done = false : this.done = true;
-        console.log("done da task " + this.taskDescription + "é igual:" + this.done)
     }
 }
 
 export function Home() {
 
-    const [doneCount, setDoneCount] = useState(0);
     const [tasksList, setTasksList] = useState<taskObject[]>([]);
+
     const [task, setTask] = useState<string>("");
+    const [doneCount, setDoneCount] = useState(0);
 
     const [isFocused, setIsFocused] = useState(false);
 
@@ -42,9 +42,8 @@ export function Home() {
             Alert.alert("Inserção de dados", "Por favor, insira a tarefa que deseja adicionar");
             return;
         }
-        const randomId = Math.random().toString(36).substring(2) + Date.now().toString(36);
-        setTasksList((prevState) => [...prevState, new taskObject(task)]);
 
+        setTasksList((prevState) => [...prevState, new taskObject(task)]);
         setTask("");
     }
 
@@ -98,7 +97,7 @@ export function Home() {
                                 done={item.done}
                                 onClickCheckBox={() => {
                                     item.onClickCheckBox();
-                                    setDoneCount((tasksList.filter((item) => !item.done)).length);
+                                    setDoneCount((tasksList.filter((item) => item.done !== false)).length);
                                     console.log(doneCount);
                                 }}
                                 onHandleRemoveTask={() => handleRemoveTask(item.taskId)}
