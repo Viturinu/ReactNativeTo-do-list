@@ -101,6 +101,7 @@ export function Home() {
                                 onClickCheckBox={() => {
                                     item.onClickCheckBox();
                                     setDoneCount((tasksList.filter((item) => item.done !== false)).length);
+                                    addTask(tasksList); //tem que ser com a lista criada acima, pois estado demora de atualizar, e acaba mandando pro AsyncStorage um estado desatualizado por conta do assincronismo.
                                 }}
                                 onHandleRemoveTask={() => handleRemoveTask(item.taskId)}
                                 key={item.taskId}
