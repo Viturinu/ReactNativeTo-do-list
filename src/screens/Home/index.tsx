@@ -1,32 +1,11 @@
 import { View, Text, TextInput, TouchableOpacity, FlatList, Alert } from "react-native";
 import { styles } from "./style";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CardComponent } from "../../components/CardComponent";
 import { EmptyListComponent } from "../../components/EmptyListComponent";
 import Logo from "../../assets/todoLogo.svg";
 import IconAdd from "../../assets/addIcon.svg"
-
-interface taskObjectProps {
-    taskId: string;
-    taskDescription: string;
-    done: boolean;
-    onClickCheckBox: () => void;
-}
-
-class taskObject implements taskObjectProps {
-    taskId: string;
-    taskDescription: string;
-    done: boolean;
-    constructor(taskDescription: string) {
-        this.taskId = Math.random().toString(36).substring(2) + Date.now().toString(36);
-        this.taskDescription = taskDescription;
-        this.done = false;
-    }
-
-    onClickCheckBox(): void {
-        this.done === true ? this.done = false : this.done = true;
-    }
-}
+import { addTask, getTaksList, removeTask, taskObject } from "../../storage/task";
 
 export function Home() {
 
@@ -37,21 +16,45 @@ export function Home() {
 
     const [isFocused, setIsFocused] = useState(false);
 
+    async function loadingTasks() {
+        try {
+            const lista = await getTaksList();
+            setTasksList(lista);
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     function handleAddTask(task: string) {
         if (task === "") {
             Alert.alert("Inserção de dados", "Por favor, insira a tarefa que deseja adicionar");
             return;
         }
-
-        setTasksList((prevState) => [...prevState, new taskObject(task)]);
-        setTask("");
+        try {
+            let lista: taskObject[] = []; //ela que será escrita, por conta da lentidão do estado. Semelhante à função abaixo de remove
+            lista = [...tasksList, new taskObject(task)];
+            setTasksList(lista); //setando o estado com o novo array
+            addTask(lista); //tem que ser com a lista criada acima, pois estado demora de atualizar, e acaba mandando pro AsyncStorage um estado desatualizado por conta do assincronismo.
+            setTask("");
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     function handleRemoveTask(taskId: string) {
-        (tasksList.find(item => item.taskId === taskId))?.done ? setDoneCount(doneCount - 1) : null;
-        const newTasksArray = tasksList.filter((item) => item.taskId !== taskId);
-        setTasksList(newTasksArray);
+        try {
+            (tasksList.find(item => item.taskId === taskId))?.done ? setDoneCount(doneCount - 1) : null;
+            const newTasksArray = tasksList.filter((item) => item.taskId !== taskId);
+            setTasksList(newTasksArray);
+            removeTask(newTasksArray); //newTaskArray por conta do assincronismo do estado, que manda um TasksList(estado) de forma desatualizada 
+        } catch (error) {
+            console.log(error)
+        }
     }
+
+    useEffect(() => {
+        loadingTasks()
+    }, [])
 
     return (
         <View style={styles.container}>
